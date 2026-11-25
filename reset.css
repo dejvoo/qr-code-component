@@ -1,0 +1,277 @@
+/* ==========================================================================
+   Modern CSS Reset — v4
+   Mostly normalization: each rule fixes a real browser-default problem.
+   Rules marked [opinion] are design defaults, not normalization. They're
+   sensible, but they are choices — keep or delete them per project.
+   ========================================================================== */
+
+/* 1. Use a more intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. [opinion] Remove default margin and padding
+      NOTE: padding: 0 is aggressive. Besides lists, it also strips padding
+      from input, select, textarea, td/th, legend, summary and similar.
+      Unstyled forms will look cramped and tables will look glued together.
+      - If you keep list-style on a list, add padding-inline-start back.
+      - If you don't style every form control and table yourself, consider
+        resetting only margin here. */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* 3. Prevent mobile browsers from inflating text + normalize tab width
+      Safari still only honors the -webkit- prefixed text-size-adjust. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  tab-size: 4;
+}
+
+/* 4. [opinion] Motion-dependent defaults for users who are fine with motion
+      - Smooth scrolling for in-page anchors
+      - interpolate-size lets height: auto / <details> animate.
+        Progressive enhancement: unsupported browsers ignore it. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+    interpolate-size: allow-keywords;
+  }
+}
+
+/* 5. Core body defaults — no font-family opinion */
+body {
+  min-height: 100svh;
+  line-height: 1.5; /* [opinion] */
+  /* [opinion] -webkit-font-smoothing: antialiased thins text on macOS and
+     lowers effective contrast. It is an aesthetic preference, not a fix.
+     Enable deliberately if you want it:
+       -webkit-font-smoothing: antialiased;
+       -moz-osx-font-smoothing: grayscale;
+  */
+}
+
+/* 6. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg,
+iframe {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Prevent media from distorting */
+img,
+picture,
+video {
+  height: auto;
+}
+
+/*
+ * 8. SVG fill: currentColor removed intentionally.
+ *    It breaks multi-color SVGs, illustrations, and third-party icon sets.
+ *    Apply `fill: currentColor` via a utility class where needed:
+ *      .icon { fill: currentColor; }
+ */
+
+/* 9. Inherit fonts for all form controls */
+input,
+button,
+textarea,
+select,
+optgroup,
+fieldset,
+legend {
+  font: inherit;
+  color: inherit;
+}
+
+/* The file input's button is a pseudo-element and misses the rule above */
+::file-selector-button {
+  font: inherit;
+  color: inherit;
+}
+
+/* 10. [opinion] Fieldset normalization */
+fieldset {
+  border: none;
+}
+
+/* 11. Native button reset — no cursor opinion on select */
+button {
+  cursor: pointer; /* [opinion] */
+  background: none;
+  border: none;
+}
+
+/*
+ * 12. cursor: not-allowed on :disabled removed intentionally.
+ *     It's a design opinion, not a normalization. It also conflicts
+ *     with pointer-events: none patterns and doesn't actually
+ *     prevent interaction. Handle disabled states in your components.
+ */
+
+/* 13. [opinion] Avoid textarea layout surprises */
+textarea {
+  resize: vertical;
+}
+
+/* 14. Safari renders search inputs with its own chrome and rounding */
+input[type="search"] {
+  -webkit-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+/* 15. Improve text wrapping */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* 16. [opinion] Improve heading rendering */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+/* 17. [opinion] Improve paragraph readability */
+p {
+  text-wrap: pretty;
+}
+
+/* 18. Sensible link defaults for unstyled links */
+a:not([class]) {
+  color: currentColor;
+  text-decoration-skip-ink: auto;
+}
+
+/* 19. Remove list styles on lists with a role, which
+       suggests the default list semantics have been removed */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* 20. Make tables behave predictably */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  text-indent: 0;
+  border-color: inherit;
+}
+
+/* 21. Monospace font stack normalization */
+pre,
+code,
+kbd,
+samp {
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: inherit;
+}
+
+/* 22. Preformatted text overflow */
+pre {
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* 23. Horizontal rule — browsers still default to a 3D inset border */
+hr {
+  height: 0;
+  border: none;
+  border-top: 1px solid;
+  color: inherit;
+}
+
+/* 24. Prevent sub/sup from inflating the line box */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* 25. The `hidden` attribute must win over display values set in your CSS.
+       Without this, `[hidden]` on an element you styled `display: flex`
+       stays visible. !important is required because the UA default loses
+       to any class of equal specificity. `until-found` is excluded so
+       find-in-page can still reveal it. */
+[hidden]:where(:not([hidden="until-found"])) {
+  display: none !important;
+}
+
+/* 26. Dialog normalization */
+dialog {
+  padding: 0;
+  border: none;
+  color: inherit;
+}
+
+dialog::backdrop {
+  background: rgb(0 0 0 / 0.25);
+}
+
+/* 27. Summary/details normalization */
+summary {
+  cursor: pointer;
+  display: list-item; /* Normalize across browsers */
+}
+
+/* 28. Remove all animations and transitions for people who prefer reduced motion.
+       scroll-behavior is kept here on purpose: it overrides any smooth
+       scrolling set later in your own styles, not just rule 4. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after,
+  *::backdrop {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 29. Better default focus behavior
+       All current browsers already use :focus-visible heuristics in their
+       UA styles, so no :focus:not(:focus-visible) override is needed. */
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* 30. Create a root stacking context for common app roots */
+#root,
+#__next {
+  isolation: isolate;
+}
